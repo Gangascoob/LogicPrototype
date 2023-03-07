@@ -13,6 +13,11 @@ namespace NaughtyCharacter
 		private Vector3 _cameraVelocity;
 		Vector2 controllRotation;
 
+		void Start()
+        {
+			Cursor.lockState = CursorLockMode.Locked;
+        }
+
 		private void LateUpdate() 
 		{
 			SetPosition(Target.transform.position);
