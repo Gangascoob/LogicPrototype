@@ -24,4 +24,9 @@ public class GameController : MonoBehaviour
     {
         anim.SetTrigger("crystalOne");
     }
+
+    public void bossStrike()
+    {
+        Debug.Log("boss hit player");
+    }
 }

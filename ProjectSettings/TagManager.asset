@@ -8,6 +8,7 @@ TagManager:
   - launchPos
   - laserBeam
   - Boss
+  - bossWeapon
   layers:
   - Default
   - TransparentFX
