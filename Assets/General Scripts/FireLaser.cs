@@ -7,6 +7,7 @@ public class FireLaser : MonoBehaviour
 
     public GameObject projectileBeam;
     public float launchVelocity = 1400f;
+    
 
     // Start is called before the first frame update
     void Start()
