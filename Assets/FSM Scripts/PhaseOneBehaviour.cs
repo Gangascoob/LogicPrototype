@@ -28,6 +28,8 @@ public class PhaseOneBehaviour : StateMachineBehaviour
         Debug.Log("PhaseOne");
         //Debug.Log(timer);
 
+        animator.transform.LookAt(playerPos);
+
         if (timer % 5 < 0.5)
         {
             timer += 0.5f;

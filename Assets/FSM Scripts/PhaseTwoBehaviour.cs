@@ -2,44 +2,48 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackPlayer : StateMachineBehaviour
+public class PhaseTwoBehaviour : StateMachineBehaviour
 {
 
-    private float timer;
-    private bool check = false;
-    private Animation anim;
+    private Transform playerPos;
+    public float speed = 1.0f;
+    public float distance;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Debug.Log("attack");
-        anim = animator.GetComponent<Animation>();
-        anim.Play("attack_short_001");
+        Debug.Log("Phase Two");
+        playerPos = GameObject.FindGameObjectWithTag("Player").transform;
+
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        var step = speed * Time.deltaTime;
+
+        Vector3 targetDirection = playerPos.position - animator.transform.position;
 
 
-            timer += Time.deltaTime;
-           
+        playerPos = GameObject.FindGameObjectWithTag("Player").transform;
+        animator.transform.position = Vector3.MoveTowards(animator.transform.position, playerPos.position, speed * Time.deltaTime);
+        distance = Vector3.Distance(animator.transform.position, playerPos.position);
+
+        animator.transform.rotation = Quaternion.LookRotation(Vector3.RotateTowards(animator.transform.forward, targetDirection, step, 0.0f));
+
+        if (distance < 2.5f)
+        {
+            animator.SetTrigger("closeDistance");
             
-            if (timer > 3)
-            {
-                animator.SetTrigger("attackOver");
-                Debug.Log("attack over");
-            }
+        }
 
-            
-        
+        Debug.Log("distance is:" + distance);
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        anim.Play("idle_normal");
-        timer = 0.0f;
+        
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
