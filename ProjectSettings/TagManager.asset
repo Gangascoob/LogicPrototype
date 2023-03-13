@@ -9,6 +9,8 @@ TagManager:
   - laserBeam
   - Boss
   - bossWeapon
+  - Floor
+  - Controller
   layers:
   - Default
   - TransparentFX

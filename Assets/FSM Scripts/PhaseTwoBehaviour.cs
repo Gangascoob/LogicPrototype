@@ -31,6 +31,8 @@ public class PhaseTwoBehaviour : StateMachineBehaviour
 
         animator.transform.rotation = Quaternion.LookRotation(Vector3.RotateTowards(animator.transform.forward, targetDirection, step, 0.0f));
 
+
+
         if (distance < 2.5f)
         {
             animator.SetTrigger("closeDistance");

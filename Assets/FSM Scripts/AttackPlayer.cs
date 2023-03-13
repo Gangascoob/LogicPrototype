@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class AttackPlayer : StateMachineBehaviour
 {
-
+    GameController gameController;
     private float timer;
-    private bool check = false;
+    private float check = 1;
     private Animation anim;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -15,6 +15,7 @@ public class AttackPlayer : StateMachineBehaviour
         Debug.Log("attack");
         anim = animator.GetComponent<Animation>();
         anim.Play("attack_short_001");
+        gameController = GameObject.FindGameObjectWithTag("Controller").GetComponent<GameController>();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -24,7 +25,20 @@ public class AttackPlayer : StateMachineBehaviour
 
             timer += Time.deltaTime;
            
-            
+            if (timer > 0.5f && timer < 1.0f)
+            {
+                if(gameController.canPlayerBeHit == true)
+                {
+                    if(check == 1)
+                    {
+                        gameController.bossStrike();
+                        check -= 1;
+                    }
+                        
+                }
+            }    
+
+
             if (timer > 1.5f)
             {
                 animator.SetTrigger("attackOver");
@@ -40,6 +54,7 @@ public class AttackPlayer : StateMachineBehaviour
     {
         anim.Play("idle_normal");
         timer = 0.0f;
+        check = 1;
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

@@ -274,8 +274,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e7990d169c46e745b6e3acbb4052d3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileBeam: {fileID: 2730957096962939240, guid: 66f593fc63b1dac4db077e00c49a5d3e, type: 3}
-  launchVelocity: 2000
+  projectileBeam: {fileID: 6127617740886473201, guid: 0a87df515c2f95346bb65bf56b5bba17, type: 3}
+  launchVelocity: 100
   launchPos: {fileID: 0}
 --- !u!91 &9100000
 AnimatorController:
