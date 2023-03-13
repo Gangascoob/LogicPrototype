@@ -6,10 +6,12 @@ using TMPro;
 public class GameController : MonoBehaviour
 {
     public TextMeshProUGUI characterHP;
+    public TextMeshProUGUI bossHP;
     public GameObject Boss;
     public float characterHealth = 20.0f;
     public float bossHealth = 100.0f;
     public bool canPlayerBeHit = false;
+    public bool canBossBeHit = false;
     Animator anim;
 
     // Start is called before the first frame update
@@ -22,7 +24,8 @@ public class GameController : MonoBehaviour
     void Update()
     {
         characterHP.text = string.Format("{0}", characterHealth);
-        if(characterHealth < 1)
+        bossHP.text = string.Format("{0}", bossHealth);
+        if (characterHealth < 1)
         {
             Debug.Log("YA DEAD");
         }
@@ -40,6 +43,11 @@ public class GameController : MonoBehaviour
         //characterHP.text = string.Format("{0}", characterHealth);
     }
 
+    public void playerStrike()
+    {
+        bossHealth -= 5.0f;
+    }
+
     public void playerHittable()
     {
         canPlayerBeHit = true;
@@ -48,5 +56,15 @@ public class GameController : MonoBehaviour
     public void playerNotHittable()
     {
         canPlayerBeHit = false;
+    }
+
+    public void bossHittable()
+    {
+        canBossBeHit = true;
+    }
+
+    public void bossNotHittable()
+    {
+        canBossBeHit = false;
     }
 }
