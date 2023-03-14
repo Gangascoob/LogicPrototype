@@ -14,6 +14,10 @@ public class GameController : MonoBehaviour
     public bool canBossBeHit = false;
     Animator anim;
 
+    public bool pillarOne = false;
+    public bool pillarTwo = false;
+    public bool pillarThree = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,9 +35,31 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void crystalOneHit()
+    public void pillarOneHit()
     {
-        anim.SetTrigger("crystalOne");
+        pillarOne = true;
+        if(pillarTwo == true && pillarThree == true)
+        {
+            anim.SetTrigger("pillarsDestroyed");
+        }
+    }
+
+    public void pillarTwoHit()
+    {
+        pillarTwo = true;
+        if(pillarOne == true && pillarThree == true)
+        {
+            anim.SetTrigger("pillarsDestroyed");
+        }
+    }
+
+    public void pillarThreeHit()
+    {
+        pillarThree = true;
+        if(pillarOne == true && pillarTwo == true)
+        {
+            anim.SetTrigger("pillarsDestroyed");
+        }
     }
 
     public void bossStrike()

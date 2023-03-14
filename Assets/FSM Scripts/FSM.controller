@@ -35,7 +35,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: crystalOne
+    m_ConditionEvent: pillarsDestroyed
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 7131258419649684275}
@@ -275,7 +275,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileBeam: {fileID: 6127617740886473201, guid: 0a87df515c2f95346bb65bf56b5bba17, type: 3}
-  launchVelocity: 100
+  launchVelocity: 80
   launchPos: {fileID: 0}
 --- !u!91 &9100000
 AnimatorController:
@@ -286,24 +286,24 @@ AnimatorController:
   m_Name: FSM
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: crystalOne
+  - m_Name: pillarsDestroyed
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: closeDistance
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: attackOver
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
