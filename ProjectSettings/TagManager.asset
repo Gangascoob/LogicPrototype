@@ -11,6 +11,7 @@ TagManager:
   - bossWeapon
   - Floor
   - Controller
+  - teleportPos
   layers:
   - Default
   - TransparentFX

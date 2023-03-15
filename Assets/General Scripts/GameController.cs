@@ -12,6 +12,8 @@ public class GameController : MonoBehaviour
     public float bossHealth = 100.0f;
     public bool canPlayerBeHit = false;
     public bool canBossBeHit = false;
+    public bool phaseOneOver = false;
+    public bool intermissionTriggerOne = false;
     Animator anim;
 
     public bool pillarOne = false;
@@ -33,31 +35,54 @@ public class GameController : MonoBehaviour
         {
             Debug.Log("YA DEAD");
         }
+        if(bossHealth < 80 && intermissionTriggerOne == false)
+        {
+            anim.SetTrigger("intermission");
+            intermissionTriggerOne = true;
+        }
     }
 
     public void pillarOneHit()
     {
-        pillarOne = true;
-        if(pillarTwo == true && pillarThree == true)
+
+        if(pillarOne == false)
         {
+            pillarOne = true;
+        }
+       
+        if(pillarTwo == true && pillarThree == true && phaseOneOver == false)
+        {
+            phaseOneOver = true;
             anim.SetTrigger("pillarsDestroyed");
         }
     }
 
     public void pillarTwoHit()
     {
-        pillarTwo = true;
-        if(pillarOne == true && pillarThree == true)
+        if(pillarTwo == false)
         {
+            pillarTwo = true;
+        }
+
+        
+        if(pillarOne == true && pillarThree == true && phaseOneOver == false)
+        {
+            phaseOneOver = true;
             anim.SetTrigger("pillarsDestroyed");
         }
     }
 
     public void pillarThreeHit()
     {
-        pillarThree = true;
-        if(pillarOne == true && pillarTwo == true)
+
+        if(pillarThree == false)
         {
+            pillarThree = true;
+        }
+        
+        if(pillarOne == true && pillarTwo == true && phaseOneOver == false)
+        {
+            phaseOneOver = true;
             anim.SetTrigger("pillarsDestroyed");
         }
     }

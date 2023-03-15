@@ -39,7 +39,7 @@ public class PhaseTwoBehaviour : StateMachineBehaviour
             
         }
 
-        Debug.Log("distance is:" + distance);
+        //Debug.Log("distance is:" + distance);
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

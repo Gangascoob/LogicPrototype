@@ -2,49 +2,61 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PhaseOneBehaviour : StateMachineBehaviour
+public class intermissionPhase : StateMachineBehaviour
 {
 
-    private Transform playerPos;
+    private Animation anim;
+    private GameObject teleportPos;
     private float timer = 0.0f;
+    private bool castComplete = false;
     public GameObject projectileBeam;
-    public float launchVelocity = 1400f;
-    public Transform launchPos;
-
+    private Transform launchPos;
+    public float launchVelocity = 50f;
+    private Animator bossAnimator;
+    
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        playerPos = GameObject.FindGameObjectWithTag("Player").transform;
+    {   
+        teleportPos = GameObject.FindGameObjectWithTag("teleportPos");
+        animator.transform.position = teleportPos.transform.position;
+        anim = animator.GetComponent<Animation>();
+        anim.Play("idle_combat");
         launchPos = GameObject.FindGameObjectWithTag("launchPos").transform;
-        //projectileBeam = GameObject.FindGameObjectWithTag("laserBeam");
+        bossAnimator = animator.GetComponent<Animator>();
+        Debug.Log("intermission");
+        
+        
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         timer += Time.deltaTime;
-        launchPos = GameObject.FindGameObjectWithTag("launchPos").transform;
-        Debug.Log("PhaseOne");
-        //Debug.Log(timer);
-
-        animator.transform.LookAt(playerPos);
-
-        if (timer % 5 < 0.5)
+        Debug.Log("update");
+        if(timer > 3)
         {
-            timer += 0.5f;
-            //Debug.Log("Timer tick");
+            animator.transform.Rotate(Vector3.up, 360f * Time.deltaTime / 1f);
             GameObject beam = Instantiate(projectileBeam, launchPos.position, launchPos.rotation);
             beam.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0, launchVelocity, 0));
         }
+        if(timer > 4)
+        {
+            bossAnimator.SetTrigger("intermissionComplete");
+        }
+
 
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        
+        anim.Play("idle_normal");
+        timer = 0;
     }
+    
+
+    
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
     //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
