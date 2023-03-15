@@ -13,6 +13,7 @@ public class intermissionPhase : StateMachineBehaviour
     private Transform launchPos;
     public float launchVelocity = 50f;
     private Animator bossAnimator;
+    private int counter = 0;
     
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -33,12 +34,18 @@ public class intermissionPhase : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         timer += Time.deltaTime;
-        Debug.Log("update");
+        counter += 1;
+        Debug.Log(timer + "update timer");
         if(timer > 3)
         {
             animator.transform.Rotate(Vector3.up, 360f * Time.deltaTime / 1f);
-            GameObject beam = Instantiate(projectileBeam, launchPos.position, launchPos.rotation);
-            beam.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0, launchVelocity, 0));
+            if (counter % 3 == 0)
+            {
+                GameObject beam = Instantiate(projectileBeam, launchPos.position, launchPos.rotation);
+                beam.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0, launchVelocity, 0));
+                
+            }
+           
         }
         if(timer > 4)
         {
@@ -53,6 +60,8 @@ public class intermissionPhase : StateMachineBehaviour
     {
         anim.Play("idle_normal");
         timer = 0;
+        Debug.Log(timer);
+        animator.ResetTrigger("intermissionComplete");
     }
     
 

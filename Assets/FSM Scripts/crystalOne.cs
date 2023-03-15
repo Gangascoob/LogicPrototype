@@ -6,13 +6,13 @@ public class crystalOne : MonoBehaviour
 {
     public GameObject GameController;
     GameController controller;
-    ParticleSystem particles;
+    public GameObject child;
 
     // Start is called before the first frame update
     void Start()
     {
         controller = GameController.GetComponent<GameController>();
-        particles = this.GetComponent<ParticleSystem>();
+        
     }
 
     // Update is called once per frame
@@ -26,7 +26,7 @@ public class crystalOne : MonoBehaviour
         if(beam.gameObject.tag == "laserBeam")
         {
             controller.pillarOneHit();
-            particles.Stop();
+            Destroy(child);
         }
     }
 

@@ -14,6 +14,10 @@ public class GameController : MonoBehaviour
     public bool canBossBeHit = false;
     public bool phaseOneOver = false;
     public bool intermissionTriggerOne = false;
+    public bool intermissionTriggerTwo = false;
+    public bool intermissionTriggerThree = false;
+    public bool intermissionTriggerFour = false;
+    public bool bossAlive = true;
     Animator anim;
 
     public bool pillarOne = false;
@@ -35,11 +39,59 @@ public class GameController : MonoBehaviour
         {
             Debug.Log("YA DEAD");
         }
-        if(bossHealth < 80 && intermissionTriggerOne == false)
+        if(bossHealth < 85 && intermissionTriggerOne == false)
         {
             anim.SetTrigger("intermission");
             intermissionTriggerOne = true;
         }
+        
+        if(bossHealth < 80 && bossHealth > 60)
+        {
+            if(GameObject.FindWithTag("laserBeam") != null)
+            {
+                Destroy(GameObject.FindWithTag("laserBeam"));
+            }
+        }
+        
+        if(bossHealth < 65 && intermissionTriggerTwo == false)
+        {
+            anim.SetTrigger("intermission");
+            intermissionTriggerTwo = true;
+        }
+        
+        if (bossHealth < 60 && bossHealth > 40)
+        {
+            if (GameObject.FindWithTag("laserBeam") != null)
+            {
+                Destroy(GameObject.FindWithTag("laserBeam"));
+            }
+        }
+        
+        if(bossHealth < 45 && intermissionTriggerThree == false)
+        {
+            anim.SetTrigger("intermission");
+            intermissionTriggerThree = true;
+        }
+        
+        if (bossHealth < 40 && bossHealth > 20)
+        {
+            if (GameObject.FindWithTag("laserBeam") != null)
+            {
+                Destroy(GameObject.FindWithTag("laserBeam"));
+            }
+        }
+
+        if (bossHealth < 25 && intermissionTriggerFour == false)
+        {
+            anim.SetTrigger("intermission");
+            intermissionTriggerFour = true;
+        }
+
+        if (bossHealth < 5 && bossAlive == true)
+        {
+            anim.SetTrigger("bossDead");
+        }
+
     }
 
     public void pillarOneHit()
@@ -97,6 +149,16 @@ public class GameController : MonoBehaviour
     public void playerStrike()
     {
         bossHealth -= 5.0f;
+
+        /*
+        for (int i = 20; i > 0; i--)
+        {
+            if (GameObject.FindWithTag("laserBeam") != null)
+            {
+                Destroy(GameObject.FindWithTag("laserBeam"));
+            }
+        }
+        */
     }
 
     public void playerHittable()

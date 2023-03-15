@@ -55,6 +55,7 @@ public class AttackPlayer : StateMachineBehaviour
         anim.Play("idle_normal");
         timer = 0.0f;
         check = 1;
+        animator.ResetTrigger("attackOver");
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
