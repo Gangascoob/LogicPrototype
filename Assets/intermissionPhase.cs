@@ -11,7 +11,7 @@ public class intermissionPhase : StateMachineBehaviour
     private bool castComplete = false;
     public GameObject projectileBeam;
     private Transform launchPos;
-    public float launchVelocity = 50f;
+    public float launchVelocity = 40f;
     private Animator bossAnimator;
     private int counter = 0;
     
@@ -39,7 +39,7 @@ public class intermissionPhase : StateMachineBehaviour
         if(timer > 3)
         {
             animator.transform.Rotate(Vector3.up, 360f * Time.deltaTime / 1f);
-            if (counter % 3 == 0)
+            if (counter % 2 == 0)
             {
                 GameObject beam = Instantiate(projectileBeam, launchPos.position, launchPos.rotation);
                 beam.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0, launchVelocity, 0));
@@ -47,7 +47,7 @@ public class intermissionPhase : StateMachineBehaviour
             }
            
         }
-        if(timer > 4)
+        if(timer > 5)
         {
             bossAnimator.SetTrigger("intermissionComplete");
         }

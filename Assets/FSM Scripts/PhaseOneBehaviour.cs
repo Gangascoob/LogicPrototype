@@ -30,7 +30,7 @@ public class PhaseOneBehaviour : StateMachineBehaviour
 
         animator.transform.LookAt(playerPos);
 
-        if (timer % 5 < 0.5)
+        if (timer % 2 < 0.5)
         {
             timer += 0.5f;
             //Debug.Log("Timer tick");

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -23,6 +24,10 @@ public class GameController : MonoBehaviour
     public bool pillarOne = false;
     public bool pillarTwo = false;
     public bool pillarThree = false;
+
+    public GameObject hitScreen;
+    public float colorA;
+    private Color color;
 
     // Start is called before the first frame update
     void Start()
@@ -92,6 +97,19 @@ public class GameController : MonoBehaviour
             anim.SetTrigger("bossDead");
         }
 
+        colorA = hitScreen.GetComponent<Image>().color.a;
+
+        if(hitScreen != null)
+        {
+            if(colorA > 0) 
+            {
+                color = hitScreen.GetComponent<Image>().color;
+                color.a -= 0.01f;
+
+                hitScreen.GetComponent<Image>().color = color;
+            }
+        }
+
     }
 
     public void pillarOneHit()
@@ -143,7 +161,14 @@ public class GameController : MonoBehaviour
     {
         Debug.Log("boss hit player");
         characterHealth -= 2.0f;
+        screenFlash();
         //characterHP.text = string.Format("{0}", characterHealth);
+    }
+
+    public void aoeStrike()
+    {
+        characterHealth -= 1.0f;
+        screenFlash();
     }
 
     public void playerStrike()
@@ -179,5 +204,13 @@ public class GameController : MonoBehaviour
     public void bossNotHittable()
     {
         canBossBeHit = false;
+    }
+
+    public void screenFlash()
+    {
+        var color = hitScreen.GetComponent<Image>().color;
+        color.a = 0.8f;
+
+        hitScreen.GetComponent<Image>().color = color;
     }
 }
