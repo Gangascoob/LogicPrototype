@@ -4,6 +4,12 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Arena.unity
+    guid: 70fde4ad3350da445ac980602eac1449
+  - enabled: 1
+    path: Assets/Scenes/RestartScreen.unity
+    guid: fbd8874b1a7980c4daecfe4772c51213
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 28c93f0e507e14a4cabd93fa0dee9aa7, type: 2}

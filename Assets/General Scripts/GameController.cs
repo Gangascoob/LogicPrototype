@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
     public TextMeshProUGUI characterHP;
     public TextMeshProUGUI bossHP;
     public GameObject Boss;
+    public GameObject Player;
+    public GameObject GameOver;
     public float characterHealth = 20.0f;
     public float bossHealth = 100.0f;
     public bool canPlayerBeHit = false;
@@ -20,6 +24,7 @@ public class GameController : MonoBehaviour
     public bool intermissionTriggerFour = false;
     public bool bossAlive = true;
     Animator anim;
+    Animator charAnim;
 
     public bool pillarOne = false;
     public bool pillarTwo = false;
@@ -32,7 +37,10 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        InputSystem.EnableDevice(Keyboard.current);
         anim = Boss.GetComponent<Animator>();
+        charAnim = Player.GetComponent<Animator>();
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
@@ -43,6 +51,7 @@ public class GameController : MonoBehaviour
         if (characterHealth < 1)
         {
             Debug.Log("YA DEAD");
+            playerDeath();
         }
         if(bossHealth < 85 && intermissionTriggerOne == false)
         {
@@ -161,14 +170,22 @@ public class GameController : MonoBehaviour
     {
         Debug.Log("boss hit player");
         characterHealth -= 2.0f;
-        screenFlash();
+        if (characterHealth > 1)
+        {
+            screenFlash();
+        }
         //characterHP.text = string.Format("{0}", characterHealth);
     }
 
     public void aoeStrike()
     {
         characterHealth -= 1.0f;
-        screenFlash();
+
+        if(characterHealth > 1)
+        {
+            screenFlash();
+        }
+        
     }
 
     public void playerStrike()
@@ -212,5 +229,27 @@ public class GameController : MonoBehaviour
         color.a = 0.8f;
 
         hitScreen.GetComponent<Image>().color = color;
+    }
+
+    public void playerDeath()
+    {
+        charAnim.Play("Die");
+        InputSystem.DisableDevice(Keyboard.current);
+        GameOver.SetActive(true);
+        StartCoroutine(GameOverProtocol());
+        
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene("Arena");
+    }
+    
+    private IEnumerator GameOverProtocol()
+    {
+        yield return new WaitForSeconds(3);
+        Cursor.lockState = CursorLockMode.None;
+        SceneManager.LoadScene("RestartScreen");
+        SceneManager.UnloadScene("Arena");
     }
 }
