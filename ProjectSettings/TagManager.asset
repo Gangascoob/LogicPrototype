@@ -12,6 +12,9 @@ TagManager:
   - Floor
   - Controller
   - teleportPos
+  - miniBoss
+  - miniBossTwo
+  - enemyCage
   layers:
   - Default
   - TransparentFX

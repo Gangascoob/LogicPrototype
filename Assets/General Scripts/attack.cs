@@ -41,6 +41,20 @@ public class attack : MonoBehaviour
 
         animator.SetTrigger("Attack");
 
+        //MINI BOSS ATTACK FUNCTIONS
+        if (gameController.canMiniBossOneBeHit == true && timer > 1.0f)
+        {
+            gameController.playerStrikeMiniBossOne();
+            timer = 0;
+        }
+
+        if (gameController.canMiniBossTwoBeHit == true && timer > 1.0f)
+        {
+            gameController.playerStrikeMiniBossTwo();
+            timer = 0;
+        }
+
+        //MAIN BOSS ATTACK FUNCTION
         if (gameController.canBossBeHit == true && timer > 1.0f)
         {
             gameController.playerStrike();

@@ -11,12 +11,25 @@ public class GameController : MonoBehaviour
     public TextMeshProUGUI characterHP;
     public TextMeshProUGUI bossHP;
     public GameObject Boss;
+
+    public GameObject miniBossOne;
+    public GameObject miniBossTwo;
+
     public GameObject Player;
     public GameObject GameOver;
+
     public float characterHealth = 20.0f;
     public float bossHealth = 100.0f;
+
+    public float miniBossOneHealth = 15.0f;
+    public float miniBossTwoHealth = 15.0f;
+
     public bool canPlayerBeHit = false;
     public bool canBossBeHit = false;
+
+    public bool canMiniBossOneBeHit = false;
+    public bool canMiniBossTwoBeHit = false;
+
     public bool phaseOneOver = false;
     public bool intermissionTriggerOne = false;
     public bool intermissionTriggerTwo = false;
@@ -25,6 +38,9 @@ public class GameController : MonoBehaviour
     public bool bossAlive = true;
     Animator anim;
     Animator charAnim;
+    
+    Animator miniBossOneAnim;
+    Animator miniBossTwoAnim;
 
     public bool pillarOne = false;
     public bool pillarTwo = false;
@@ -40,6 +56,10 @@ public class GameController : MonoBehaviour
         InputSystem.EnableDevice(Keyboard.current);
         anim = Boss.GetComponent<Animator>();
         charAnim = Player.GetComponent<Animator>();
+
+        miniBossOneAnim = miniBossOne.GetComponent<Animator>();
+        miniBossTwoAnim = miniBossTwo.GetComponent<Animator>();
+
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -53,6 +73,18 @@ public class GameController : MonoBehaviour
             Debug.Log("YA DEAD");
             playerDeath();
         }
+
+        if (miniBossOneHealth < 1)
+        {
+            miniBossOneAnim.SetTrigger("miniBossDead");
+            StartCoroutine(MiniBossOneDead());
+        }
+
+        if (miniBossTwoHealth < 1) {
+            miniBossTwoAnim.SetTrigger("miniBossTwoDead");
+            StartCoroutine(MiniBossTwoDead());
+        }
+
         if(bossHealth < 85 && intermissionTriggerOne == false)
         {
             anim.SetTrigger("intermission");
@@ -188,21 +220,27 @@ public class GameController : MonoBehaviour
         
     }
 
+    //PLAYER STRIKE MAIN BOSS
     public void playerStrike()
     {
         bossHealth -= 5.0f;
-
-        /*
-        for (int i = 20; i > 0; i--)
-        {
-            if (GameObject.FindWithTag("laserBeam") != null)
-            {
-                Destroy(GameObject.FindWithTag("laserBeam"));
-            }
-        }
-        */
+        
     }
 
+    //PLAYER STRIKE MINI BOSSES
+    public void playerStrikeMiniBossOne()
+    {    
+        miniBossOneHealth -= 5.0f;
+        Debug.Log(miniBossOneHealth);
+    }
+
+    public void playerStrikeMiniBossTwo()
+    {
+        miniBossTwoHealth -= 5.0f;
+
+    }
+
+    //PLAYER HIT FUNCTIONS
     public void playerHittable()
     {
         canPlayerBeHit = true;
@@ -213,6 +251,7 @@ public class GameController : MonoBehaviour
         canPlayerBeHit = false;
     }
 
+    //MAIN BOSS HIT FUNCTIONS
     public void bossHittable()
     {
         canBossBeHit = true;
@@ -221,6 +260,27 @@ public class GameController : MonoBehaviour
     public void bossNotHittable()
     {
         canBossBeHit = false;
+    }
+
+    //MINI BOSS HIT FUNCTIONS
+    public void miniBossOneHittable()
+    {
+        canMiniBossOneBeHit = true;
+    }
+
+    public void miniBossOneNotHittable()
+    {
+        canMiniBossOneBeHit = false;
+    }
+
+    public void miniBossTwoHittable()
+    {
+        canMiniBossTwoBeHit = true;
+    }
+
+    public void miniBossTwoNotHittable()
+    {
+        canMiniBossTwoBeHit = false;
     }
 
     public void screenFlash()
@@ -251,5 +311,16 @@ public class GameController : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         SceneManager.LoadScene("RestartScreen");
         SceneManager.UnloadScene("Arena");
+    }
+
+    private IEnumerator MiniBossOneDead() { 
+        yield return new WaitForSeconds(3);
+        Destroy(miniBossOne);
+    }
+
+    private IEnumerator MiniBossTwoDead()
+    {
+        yield return new WaitForSeconds(3);
+        Destroy(miniBossTwo);
     }
 }
