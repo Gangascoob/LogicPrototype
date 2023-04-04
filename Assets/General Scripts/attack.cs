@@ -52,6 +52,7 @@ public class attack : MonoBehaviour
         {
             gameController.playerStrikeMiniBossTwo();
             timer = 0;
+            Debug.Log("hit mini 2");
         }
 
         //MAIN BOSS ATTACK FUNCTION

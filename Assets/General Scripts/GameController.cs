@@ -18,11 +18,14 @@ public class GameController : MonoBehaviour
     public GameObject Player;
     public GameObject GameOver;
 
-    public float characterHealth = 20.0f;
+    private float characterHealth = 30.0f;
     public float bossHealth = 100.0f;
 
     public float miniBossOneHealth = 15.0f;
     public float miniBossTwoHealth = 15.0f;
+
+    public bool miniBossOneAlive = true;
+    public bool miniBossTwoAlive = true;
 
     public bool canPlayerBeHit = false;
     public bool canBossBeHit = false;
@@ -74,15 +77,20 @@ public class GameController : MonoBehaviour
             playerDeath();
         }
 
-        if (miniBossOneHealth < 1)
+        
+        if (miniBossOneHealth < 1 && miniBossOneAlive == true)
         {
             miniBossOneAnim.SetTrigger("miniBossDead");
             StartCoroutine(MiniBossOneDead());
+            miniBossOneAlive = false;
+            
         }
 
-        if (miniBossTwoHealth < 1) {
+        if (miniBossTwoHealth < 1 && miniBossTwoAlive == true) {
             miniBossTwoAnim.SetTrigger("miniBossTwoDead");
             StartCoroutine(MiniBossTwoDead());
+            miniBossTwoAlive = false;
+           
         }
 
         if(bossHealth < 85 && intermissionTriggerOne == false)
@@ -200,7 +208,6 @@ public class GameController : MonoBehaviour
 
     public void bossStrike()
     {
-        Debug.Log("boss hit player");
         characterHealth -= 2.0f;
         if (characterHealth > 1)
         {
@@ -237,7 +244,7 @@ public class GameController : MonoBehaviour
     public void playerStrikeMiniBossTwo()
     {
         miniBossTwoHealth -= 5.0f;
-
+        Debug.Log(miniBossTwoHealth);
     }
 
     //PLAYER HIT FUNCTIONS
@@ -316,11 +323,19 @@ public class GameController : MonoBehaviour
     private IEnumerator MiniBossOneDead() { 
         yield return new WaitForSeconds(3);
         Destroy(miniBossOne);
+        if (canMiniBossOneBeHit == true)
+        {
+            canMiniBossOneBeHit = false;
+        }
     }
 
     private IEnumerator MiniBossTwoDead()
     {
         yield return new WaitForSeconds(3);
         Destroy(miniBossTwo);
+        if (canMiniBossTwoBeHit == true)
+        {
+            canMiniBossTwoBeHit = false;
+        }
     }
 }

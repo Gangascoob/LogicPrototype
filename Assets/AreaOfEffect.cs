@@ -24,9 +24,9 @@ public class AreaOfEffect : MonoBehaviour
     void FixedUpdate()
     {
         timer += 0.02f;
-        vectorX += 0.0005f;
-        vectorY += 0.0005f;
-        vectorZ += 0.0005f;
+        vectorX += 0.0003f;
+        vectorY += 0.0003f;
+        vectorZ += 0.0003f;
         this.transform.localScale = new Vector3(vectorX, vectorY, vectorZ);
         if(timer > 1 && playerIn == true)
         {

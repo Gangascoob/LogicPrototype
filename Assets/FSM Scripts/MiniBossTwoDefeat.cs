@@ -7,13 +7,18 @@ public class MiniBossTwoDefeat : StateMachineBehaviour
 
     private Animation anim;
     private GameObject mini_boss;
+    private GameObject mainBoss;
+    Animator bossAnim;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        mainBoss = GameObject.FindWithTag("Boss");
+        bossAnim = mainBoss.GetComponent<Animator>();
         mini_boss = GameObject.FindWithTag("miniBossTwo");
         anim = mini_boss.GetComponent<Animation>();
         anim.Play("dead");
+        bossAnim.SetTrigger("prePhaseOver");
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
